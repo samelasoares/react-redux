@@ -2,6 +2,7 @@ import * as Collapsible from "@radix-ui/react-collapsible";
 
 import { ChevronDown } from "lucide-react";
 import { Music } from "./Music";
+import { useAppSelector } from "../Store";
 
 interface FirstButtonProps {
   firstButtonIndex: number;
@@ -14,6 +15,10 @@ export function FirstButton({
   firstButtonIndex,
   amountOfMusic,
 }: FirstButtonProps) {
+  const songs = useAppSelector((state) => {
+    return state.player.song.doramas[firstButtonIndex].songs
+  })
+
   return (
     <Collapsible.Root className="group">
       {/* Botão principal, primeiro botão e o numero de musicas */}
@@ -34,9 +39,12 @@ export function FirstButton({
 
       <Collapsible.Content>
         <nav className="relative flex flex-col gap-4 p-6">
-          <Music title="Love Maybe" duration="03:05" />
-          <Music title="Love Maybe" duration="03:05" />
-          <Music title="Love Maybe" duration="03:05" />
+          {songs.map(song => {
+            return <Music 
+            key={song.id}
+            title={song.title} 
+            duration={song.duration} />
+          })}
         </nav>
       </Collapsible.Content>
     </Collapsible.Root>

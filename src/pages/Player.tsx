@@ -2,8 +2,14 @@ import { MessageSquare } from "lucide-react";
 import { Header } from "../Components/Header";
 import { Video } from "../Components/Video";
 import { FirstButton } from "../Components/First-button";
+import { useAppSelector } from "../Store";
 
 export function Player() {
+  //No redux, o Selector eu extraio somente a infor. que eu quero que é infor que ta no return
+  const doramas = useAppSelector((state) => {
+    return state.player.song.doramas; //aqui eu to no meu state-indo para o reducer de player-acessando os song e acessando os doramas
+  });
+
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
       <div className="flex w-[1100px] flex-col gap-6">
@@ -24,21 +30,16 @@ export function Player() {
             <Video />
           </div>
           <aside className="w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-800">
-            <FirstButton
-              firstButtonIndex={0}
-              title="Busness Proporsal"
-              amountOfMusic={3}
-            />
-            <FirstButton
-              firstButtonIndex={1}
-              title="Busness Proporsal"
-              amountOfMusic={3}
-            />
-            <FirstButton
-              firstButtonIndex={2}
-              title="Busness Proporsal"
-              amountOfMusic={3}
-            />
+            {doramas.map((dorama, index) => {
+              return (
+                <FirstButton
+                  key={dorama.id}
+                  firstButtonIndex={index}
+                  title={dorama.title}
+                  amountOfMusic={dorama.songs.length}
+                />
+              );
+            })}
           </aside>
         </main>
       </div>
