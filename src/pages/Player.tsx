@@ -7,7 +7,7 @@ import { useAppSelector } from "../Store";
 export function Player() {
   //No redux, o Selector eu extraio somente a infor. que eu quero que é infor que ta no return
   const doramas = useAppSelector((state) => {
-    return state.player.song.doramas; //aqui eu to no meu state-indo para o reducer de player-acessando os song e acessando os doramas
+    return state.player.KDramaSong.kDramas; //aqui eu to no meu state-indo para o reducer de player-acessando os song e acessando os doramas
   });
 
   return (
