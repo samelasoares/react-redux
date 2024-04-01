@@ -1,15 +1,7 @@
-import { useAppSelector } from "../Store";
+import { useCurrentSong } from "../Store/Slices/player";
 
 export function Header() {
-  const {currentKDrama,currentSong } = useAppSelector((state) => {
-    //vou retornar os dados do KDramaSong atual
-    const { currentKDramasIndex, currentSongIndex } = state.player;
-
-    const currentKDrama = state.player.KDramaSong.kDramas[currentKDramasIndex]
-    const currentSong = currentKDrama.songs[currentSongIndex];
-
-    return {currentSong, currentKDrama};
-  });
+  const {currentKDrama,currentSong } = useCurrentSong()
 
   return (
     <div className="flex flex-col gap-1">

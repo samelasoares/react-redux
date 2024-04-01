@@ -30,7 +30,7 @@ export function FirstButton({
   });
 
   return (
-    <Collapsible.Root className="group" > {/* defaultOpen={firstButtonIndex === 0} isso aqui é caso queira que um modulo ja venha aberto.Colocar depois de classname */} 
+    <Collapsible.Root className="group" defaultOpen={firstButtonIndex === 0}>  {/*isso aqui é caso queira que primeiro modulo ja venha aberto*/} 
       {/* Botão principal, primeiro botão e o numero de musicas */}
       <Collapsible.Trigger className="flex w-full items-center gap-3 bg-zinc-800 p-4">
         <div className="flex h-10 w-10 rounded-full items-center justify-center bg-zinc-950 text-xs">

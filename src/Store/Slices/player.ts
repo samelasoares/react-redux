@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { useAppSelector } from "..";
 
 const playerSlice = createSlice({
   name: "player",
@@ -69,3 +70,15 @@ const playerSlice = createSlice({
 //aqui eu vou importar player no index dentro do store/reducer
 export const player = playerSlice.reducer;
 export const { play, next } = playerSlice.actions;
+
+export const useCurrentSong = () => {
+  return useAppSelector(state => {
+    //vou retornar os dados do KDramaSong atual
+    const { currentKDramasIndex, currentSongIndex } = state.player;
+
+    const currentKDrama = state.player.KDramaSong.kDramas[currentKDramasIndex]
+    const currentSong = currentKDrama.songs[currentSongIndex];
+
+    return {currentSong, currentKDrama};
+  });
+}

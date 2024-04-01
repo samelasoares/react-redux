@@ -3,12 +3,20 @@ import { Header } from "../Components/Header";
 import { Video } from "../Components/Video";
 import { FirstButton } from "../Components/First-button";
 import { useAppSelector } from "../Store";
+import { useCurrentSong } from "../Store/Slices/player";
+import { useEffect } from "react";
 
 export function Player() {
   //No redux, o Selector eu extraio somente a infor. que eu quero que é infor que ta no return
   const doramas = useAppSelector((state) => {
     return state.player.KDramaSong.kDramas; //aqui eu to no meu state-indo para o reducer de player-acessando os song e acessando os doramas
   });
+//aqui coloquei o titulo da pagina para quando tiver assistindo o titulo da pag mude
+  const { currentSong } = useCurrentSong()
+
+  useEffect(() => {
+    document.title = `Assistindo: ${currentSong.title}`
+  }, [currentSong])
 
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
