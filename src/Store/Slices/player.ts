@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const playerSlice = createSlice({
   name: "player",
@@ -43,12 +43,29 @@ const playerSlice = createSlice({
   },
   //aqui são as minhas ações. State: estado atual / action: ações em si
   reducers: {
-    play: (state, action) => {
+    play: (state, action: PayloadAction<[number, number]>) => {
       state.currentKDramasIndex = action.payload[0];
       state.currentSongIndex = action.payload[1];
+    },
+// verificação para conseguir passar as musicas depois que ela terminar e tambem trocar de modulo e passar a proxima musica, se tiver outra musica ou outro modulo
+    next: (state) => {
+      const nextSongIndex = state.currentSongIndex + 1  //to pegando o index da aula atual e + 1
+      const nextSong = state.KDramaSong.kDramas[state.currentKDramasIndex].songs[nextSongIndex] //agora vou verificar se existe uma proxima musica. Vou pegar o dorama atual e vou verificar se tem uma proxima msc
+
+      if(nextSong) { //se(if) nextSong existir, se existir uma proxima musica ele vai trocar a msc atual para a proximo musica  
+        state.currentSongIndex = nextSongIndex // ele me retorna a proxima musica.
+     } else { //aqui vou verificar se existe o proximo dorama
+      const nextKDramaIndex = state.currentKDramasIndex + 1
+      const nextKDrama = state.KDramaSong.kDramas[nextKDramaIndex]
+
+      if(nextKDrama){   //se existir um proximo dorama, ele vai trocar do dorama atual para o proximo dorama  
+        state.currentKDramasIndex = nextKDramaIndex
+        state.currentSongIndex = 0  // aqui vai ficar 0 porque é a primeira musica
+      }
+     }
     },
   },
 });
 //aqui eu vou importar player no index dentro do store/reducer
 export const player = playerSlice.reducer;
-export const { play } = playerSlice.actions;
+export const { play, next } = playerSlice.actions;
