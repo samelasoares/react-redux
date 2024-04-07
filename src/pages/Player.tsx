@@ -1,7 +1,7 @@
 import { MessageSquare } from "lucide-react";
 import { Header } from "../Components/Header";
 import { Video } from "../Components/Video";
-import { FirstButton } from "../Components/First-button";
+import { FirstKDrama } from "../Components/First-KDrama";
 import { useAppSelector } from "../Store";
 import { useCurrentSong } from "../Store/Slices/player";
 import { useEffect } from "react";
@@ -11,12 +11,12 @@ export function Player() {
   const doramas = useAppSelector((state) => {
     return state.player.KDramaSong.kDramas; //aqui eu to no meu state-indo para o reducer de player-acessando os song e acessando os doramas
   });
-//aqui coloquei o titulo da pagina para quando tiver assistindo o titulo da pag mude
-  const { currentSong } = useCurrentSong()
+  //aqui coloquei o titulo da pagina para quando tiver assistindo o titulo da pag mude
+  const { currentSong } = useCurrentSong();
 
   useEffect(() => {
-    document.title = `Assistindo: ${currentSong.title}`
-  }, [currentSong])
+    document.title = `Assistindo: ${currentSong.title}`;
+  }, [currentSong]);
 
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
@@ -40,9 +40,9 @@ export function Player() {
           <aside className="w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-800">
             {doramas.map((dorama, index) => {
               return (
-                <FirstButton
+                <FirstKDrama
                   key={dorama.id}
-                  firstButtonIndex={index}
+                  firstKDramaIndex={index}
                   title={dorama.title}
                   amountOfMusic={dorama.songs.length}
                 />
