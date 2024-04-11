@@ -2,8 +2,7 @@ import * as Collapsible from "@radix-ui/react-collapsible";
 
 import { ChevronDown } from "lucide-react";
 import { Music } from "./Music";
-import { useAppSelector } from "../Store";
-import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../Store";
 import { play } from "../Store/Slices/player";
 
 interface FirstKDramaProps {
@@ -11,13 +10,12 @@ interface FirstKDramaProps {
   title: string;
   amountOfMusic: number;
 }
-//como se fosse o modulo
 export function FirstKDrama({
   title,
   firstKDramaIndex,
   amountOfMusic,
 }: FirstKDramaProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { currentKDramasIndex, currentSongIndex } = useAppSelector((state) => {
     const { currentKDramasIndex, currentSongIndex } = state.player;
@@ -26,12 +24,11 @@ export function FirstKDrama({
   });
 
   const songs = useAppSelector((state) => {
-    return state.player.KDramaSong.kDramas[firstKDramaIndex].songs;
+    return state.player.KDramaSong?.kDramas[firstKDramaIndex].songs;
   });
 
   return (
-    <Collapsible.Root className="group" defaultOpen={firstKDramaIndex === 0}>  {/*isso aqui é caso queira que primeiro modulo ja venha aberto*/} 
-      {/* Botão principal, primeiro botão e o numero de musicas */}
+    <Collapsible.Root className="group" defaultOpen={firstKDramaIndex === 0}>
       <Collapsible.Trigger className="flex w-full items-center gap-3 bg-zinc-800 p-4">
         <div className="flex h-10 w-10 rounded-full items-center justify-center bg-zinc-950 text-xs">
           {/* 1 */}
@@ -44,25 +41,25 @@ export function FirstKDrama({
         </div>
         {/* icone do primeiro botão */}
         <ChevronDown className="w-5 h-5 ml-auto text-zinc-400 group-data-[state=open]:rotate-180 transition-transform" />
-        {/* Segundo botão que foi copiado e colado para os outros botões e criado a tag Nav onde vai ficar os links */}
       </Collapsible.Trigger>
 
       <Collapsible.Content>
         <nav className="relative flex flex-col gap-4 p-6">
-          {songs.map((song, songIndex) => {
-            const isCurrent =
-              currentKDramasIndex === firstKDramaIndex &&
-              currentSongIndex === songIndex;
-            return (
-              <Music
-                key={song.id}
-                title={song.title}
-                duration={song.duration}
-                onPlay={() => dispatch(play([firstKDramaIndex, songIndex]))}
-                isCurrent={isCurrent}
-              />
-            );
-          })}
+          {songs &&
+            songs.map((song, songIndex) => {
+              const isCurrent =
+                currentKDramasIndex === firstKDramaIndex &&
+                currentSongIndex === songIndex;
+              return (
+                <Music
+                  key={song.id}
+                  title={song.title}
+                  duration={song.duration}
+                  onPlay={() => dispatch(play([firstKDramaIndex, songIndex]))}
+                  isCurrent={isCurrent}
+                />
+              );
+            })}
         </nav>
       </Collapsible.Content>
     </Collapsible.Root>

@@ -1,0 +1,36 @@
+{
+    "KDramaSong":[
+      {
+        "id": 1,
+        "kDramas": [
+          {
+            "id": 1,
+            "title": "Business Proporsal",
+          "songs": [
+              { "id": "WDcPhknPWdU", "title": "Love, Maybe", "duration": "03:04" },
+              { "id": "slTMtSliUDM", "title": "You Are Mine", "duration": "03:29" },
+              { "id": "A8Izgl25RKo", "title": "Closer", "duration": "03:59" }
+            ]
+          },
+          {
+            "id": 2,
+            "title": "True beauty",
+          "songs": [
+              { "id": "oogZh1gZ7bU", "title": "Im Missing You", "duration": "03:02" },
+              { "id": "-PQGsN_Xx9o", "title": "Love So Fine", "duration": "03:11" },
+              { "id": "9LjxxZSYw0I", "title": "It Start Today", "duration": "04:01" }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "Start-Up",
+          "songs": [
+              { "id": "GTcM3qCeup0", "title": "Future", "duration": "03:34" },
+              { "id": "tErAX213xcQ", "title": "Where Is Dream", "duration": "03:02" },
+              { "id": "2dEeiY_w3xE", "title": "Day & Night", "duration": "04:14" }
+            ]
+          }
+        ]
+      }
+    ]
+}

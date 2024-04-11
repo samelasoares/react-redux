@@ -1,12 +1,13 @@
 import ReactPlayer from "react-player";
-import { useDispatch } from "react-redux";
 import { next, useCurrentSong } from "../Store/Slices/player";
+import { useAppDispatch, useAppSelector } from "../Store";
+import { Loader } from "lucide-react";
 
-//video principal da tela
 export function Video() {
-  const dispatch = useDispatch();
-  //vou retornar os dados do KDramaSong atual
+  const dispatch = useAppDispatch();
   const { currentSong } = useCurrentSong();
+  //foi colocado o loading
+  const isKDramaSongLoading = useAppSelector(state => state.player.isLoading);
 
   function handlePlayNext() {
     dispatch(next());
@@ -14,14 +15,20 @@ export function Video() {
 
   return (
     <div className="w-full bg-zinc-950 aspect-video">
-      <ReactPlayer
-        width="100%"
-        height="100%"
-        controls
-        playing //essa propriedade se eu deixar ela como "true", ela dar play automatico no video
-        onEnded={handlePlayNext}
-        url={`https://www.youtube.com/watch?v=${currentSong.id}`}
-      />
+      {isKDramaSongLoading ? (
+        <div className="flex h-full items-center justify-center">
+          <Loader className="w-6 h-6 text-zinc-200 animate-spin"/>
+        </div>
+      ) : (
+        <ReactPlayer
+          width="100%"
+          height="100%"
+          controls
+          playing
+          onEnded={handlePlayNext}
+          url={`https://www.youtube.com/watch?v=${currentSong?.id}`}
+        />
+      )}
     </div>
   );
 }

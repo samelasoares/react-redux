@@ -1,8 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { useSelector, TypedUseSelectorHook } from "react-redux";
+import { useSelector, TypedUseSelectorHook, UseDispatch, useDispatch } from "react-redux";
 import { player } from "./Slices/player";
 
-//Store é o estado global
 export const store = configureStore({
   reducer: {
     player,
@@ -10,4 +9,7 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch
+
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch: () => AppDispatch =  useDispatch
