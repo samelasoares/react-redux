@@ -1,9 +1,7 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
-
 import { ChevronDown } from "lucide-react";
 import { Music } from "./Music";
-import { useAppDispatch, useAppSelector } from "../Store";
-import { play } from "../Store/Slices/player";
+import { useStore } from "../zustand-store";
 
 interface FirstKDramaProps {
   firstKDramaIndex: number;
@@ -15,17 +13,16 @@ export function FirstKDrama({
   firstKDramaIndex,
   amountOfMusic,
 }: FirstKDramaProps) {
-  const dispatch = useAppDispatch();
-
-  const { currentKDramasIndex, currentSongIndex } = useAppSelector((state) => {
-    const { currentKDramasIndex, currentSongIndex } = state.player;
-
-    return { currentKDramasIndex, currentSongIndex };
-  });
-
-  const songs = useAppSelector((state) => {
-    return state.player.KDramaSong?.kDramas[firstKDramaIndex].songs;
-  });
+  const { currentSongIndex, currentKDramasIndex, play, songs } = useStore(
+    (store) => {
+      return {
+        songs: store.KDramaSong?.kDramas[firstKDramaIndex].songs,
+        currentSongIndex: store.currentSongIndex,
+        currentKDramasIndex: store.currentKDramasIndex,
+        play: store.play,
+      };
+    }
+  );
 
   return (
     <Collapsible.Root className="group" defaultOpen={firstKDramaIndex === 0}>
@@ -39,7 +36,7 @@ export function FirstKDrama({
           <strong className="text-sm">{title}</strong>
           <span className="text-xs text-zinc-400">{amountOfMusic} músicas</span>
         </div>
-        {/* icone do primeiro botão */}
+        {/* first button icon*/}
         <ChevronDown className="w-5 h-5 ml-auto text-zinc-400 group-data-[state=open]:rotate-180 transition-transform" />
       </Collapsible.Trigger>
 
@@ -55,7 +52,7 @@ export function FirstKDrama({
                   key={song.id}
                   title={song.title}
                   duration={song.duration}
-                  onPlay={() => dispatch(play([firstKDramaIndex, songIndex]))}
+                  onPlay={() => play([firstKDramaIndex, songIndex])}
                   isCurrent={isCurrent}
                 />
               );

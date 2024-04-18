@@ -1,23 +1,25 @@
 import ReactPlayer from "react-player";
-import { next, useCurrentSong } from "../Store/Slices/player";
-import { useAppDispatch, useAppSelector } from "../Store";
 import { Loader } from "lucide-react";
+import { useCurrentSong, useStore } from "../zustand-store";
 
 export function Video() {
-  const dispatch = useAppDispatch();
   const { currentSong } = useCurrentSong();
-  //foi colocado o loading
-  const isKDramaSongLoading = useAppSelector(state => state.player.isLoading);
+  const { isLoading, next } = useStore((store) => {
+    return {
+      isLoading: store.isLoading,
+      next: store.next,
+    };
+  });
 
   function handlePlayNext() {
-    dispatch(next());
+    next();
   }
 
   return (
     <div className="w-full bg-zinc-950 aspect-video">
-      {isKDramaSongLoading ? (
+      {isLoading ? (
         <div className="flex h-full items-center justify-center">
-          <Loader className="w-6 h-6 text-zinc-200 animate-spin"/>
+          <Loader className="w-6 h-6 text-zinc-200 animate-spin" />
         </div>
       ) : (
         <ReactPlayer

@@ -2,21 +2,21 @@ import { MessageSquare } from "lucide-react";
 import { Header } from "../Components/Header";
 import { Video } from "../Components/Video";
 import { FirstKDrama } from "../Components/First-KDrama";
-import { useAppDispatch, useAppSelector } from "../Store";
-import { loadSongs, useCurrentSong } from "../Store/Slices/player";
 import { useEffect } from "react";
+import { useCurrentSong, useStore } from "../zustand-store";
 
 export function Player() {
-  const dispatch = useAppDispatch();
-
-  const kDramas = useAppSelector((state) => {
-    return state.player.KDramaSong?.kDramas;
+  const { KDramaSong, load } = useStore((store) => {
+    return {
+      KDramaSong: store.KDramaSong,
+      load: store.load,
+    };
   });
   const { currentSong } = useCurrentSong();
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(loadSongs());
+      load();
     }, 500);
   }, []);
 
@@ -43,8 +43,8 @@ export function Player() {
             <Video />
           </div>
           <aside className="w-80 absolute top-0 bottom-0 right-0 border-l divide-y-2 divide-zinc-900 border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-800">
-            {kDramas &&
-              kDramas.map((dorama, index) => {
+            {KDramaSong?.kDramas &&
+              KDramaSong?.kDramas.map((dorama, index) => {
                 return (
                   <FirstKDrama
                     key={dorama.id}
